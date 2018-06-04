@@ -6,3 +6,6 @@
 - git commit -m "url"
 - git log
 - git remote add origin "url" 
+- git remote -v
+- git push origin master
+- git clone "url"
