@@ -9,8 +9,9 @@ html {
 }
 
 :root {
-  --brand-color: #757400;
+  --back-color: #03132c;
   --bard-white: #ddd;
+  --brand-color: #757400;
   --nav-height: 80px;
 }
 
