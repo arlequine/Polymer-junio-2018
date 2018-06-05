@@ -32,7 +32,8 @@ html {
 
 .navbar__link,
 .navbar__link--flex,
-.navbar__link--grid {
+.navbar__link--grid,
+.navbar__link--mobile {
   color: var(--bard-white);
   font-size: 25px;
   text-decoration: none;
@@ -65,6 +66,33 @@ html {
 }
 
 .navbar__list--grid {
+  display: grid;
+  grid-column: 2/3;
+  list-style: none;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  text-align: center;
+}
+
+/* mobile */
+
+.navbar--mobile {
+  align-items: center;
+  background-color: var(--brand-color);
+  display: flex;
+  justify-content: center;
+  height: var(--nav-height);
+}
+
+.navbar__list--mobile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style: none;
+  width: 350px;
+}
+
+.navbar__list--mobile {
   display: grid;
   grid-column: 2/3;
   list-style: none;
