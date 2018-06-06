@@ -9,7 +9,7 @@ html {
 }
 :root {
   --brand-color: #777;
-  --bard-white: #ddd;
+  --brand-white: #ddd;
   --back-color: #03132c;
   --nav-height: 30px;
   --text-color: #838382;
@@ -33,9 +33,9 @@ html {
 }
 
 .navbar__link {
-    color: var(--bard-white);
-    font-size: 17px;
-    text-decoration: none;
+  color: var(--brand-white);
+  font-size: 17px;
+  text-decoration: none;
 }
 
 .navbar__input {
@@ -45,7 +45,7 @@ html {
   text-align: right;
 }
 
-.navbar__input input{
+.navbar__input input {
   border-radius: 20px
 }
 .banner {
@@ -63,7 +63,8 @@ html {
 }
 .section__item {
   width: 75%;
-  padding: 20px
+  padding: 20px;
+  position: relative;
 }
 
 .content__twocolumns {
@@ -76,33 +77,47 @@ html {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-.section__img img{
+.section__img img {
   width: 267px;
   height: 270px;
   display: flex;
   justify-content: flex-end;
 }
 
-.section__text p{
+.section__text p {
   font-size: 30px;
   color: var(--text-color);
   justify-content: flex-start;
 }
-footer{
+footer {
   display: flex;
   justify-content: center;
   background-color: #ffffff;
   height: 100px;
   padding: 20px;
 }
-button{
+button {
   width: 200px;
   height: 40px;
   font-size: 20px;
-  color: var(--bard-white);
+  color: var(--brand-white);
   background-color: var(--button-color);
   border-radius: 5px
-
 }
 
 /* mobile */
+
+.navbar__menu {
+  display: none;
+}
+
+@media only screen and (max-width: 1209px){
+  html {
+    background-color: var(--back-color);
+  }
+  .item4,
+  .item5 {
+    display: none;
+  }
+
+}
