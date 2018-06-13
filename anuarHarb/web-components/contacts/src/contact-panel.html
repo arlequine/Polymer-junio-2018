@@ -1,0 +1,79 @@
+<script>
+  (function contactPanel(customElements) {
+    'use strict';
+
+    class ContactPanel extends HTMLElement {
+
+      static get observedAttributes() {
+        return ['name', 'phone', 'address', 'image-url'];
+      }
+
+      constructor() {
+        super();
+        this.name;
+        this.phone;
+        this.address;
+        this.imageUrl;
+
+        const shadowRoot = this.attachShadow({ mode: 'open' });
+        shadowRoot.innerHTML = `
+          <style>
+            section {
+              padding: 20px;
+            }
+            picture {
+              display: block;
+              margin: 0 auto;
+              width: 200px;
+            }
+            img {
+              width: 100%;
+            }
+            h1, p {
+              background-color: orange;
+              padding: 40px 0;
+              margin: 20px 0;
+              text-align: center;
+              font-size: 30px;
+            }
+          </style>
+          <section>
+            <picture>
+              <img src="" alt="portrait" />
+            </picture>
+            <h1></h1>
+            <p>Phone: <span class="phone"></span></p>
+            <p>Address: <span class="address"></span></p>
+          </section>
+        `
+      }
+
+      attributeChangedCallback(attrName, oldVal, newVal) {
+        this.updateActiveContact();
+      }
+
+      get name() {
+        return this.getAttribute('name');
+      }
+      get phone() {
+        return this.getAttribute('phone');
+      }
+      get address() {
+        return this.getAttribute('address');
+      }
+      get imageUrl() {
+        return this.getAttribute('image-url');
+      }
+
+      updateActiveContact() {
+        this.shadowRoot.querySelector('h1').innerHTML = this.name;
+        this.shadowRoot.querySelector('.phone').innerHTML = this.phone;
+        this.shadowRoot.querySelector('.address').innerHTML = this.address;
+        this.shadowRoot.querySelector('img').setAttribute('src', this.imageUrl)
+      }
+
+    }
+
+    customElements.define('contact-panel', ContactPanel);
+  })(window.customElements)
+</script>

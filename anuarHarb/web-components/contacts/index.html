@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Contacts</title>
+  <link rel="import" href="src/app-shell.html">
+  <link rel="import" href="src/contact-card.html">
+  <link rel="import" href="src/contact-panel.html">
+</head>
+<body>
+
+  <app-shell>
+    <contact-panel slot="contact-panel"></contact-panel>
+    <contact-card
+      name = "Sofía"
+      phone = "5545209635"
+      address = "Agustin Melgar 44"
+      image-url = "/img/portrait1.jpg"
+      slot="contact-card">
+    </contact-card>
+    <contact-card
+      name = "Karla"
+      phone = "5566661111"
+      address = "Agustin Melgar 44"
+      image-url = "/img/portrait3.jpg"
+      slot="contact-card">
+    </contact-card>
+  </app-shell>
+
+</body>
+</html>
