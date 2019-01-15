@@ -3,11 +3,13 @@
   <head>
     <meta charset="utf-8">
     <title>Bar Load</title>
-    <link rel="import" href="bar-component.html">
+    <!-- <link rel="import" href="bar-component.html"> -->
   </head>
   <body>
-    <bar-component></bar-component>
-    <button type="button" name="button" value="speed">Hey click me!</button>
+    <bar-component speed="fast" ></bar-component>
+    <main>
+      <button id="btn" type="button" name="button" value="speed">Hey click me!</button>
+    </main>
     <style media="screen">
     button {
       background-color: green;
@@ -15,11 +17,107 @@
     }
     </style>
     <script type="text/javascript">
-    const myElement = document.querySelector('button');
-    const valueBtn = document.querySelector('bar-component');
-    myElement.addEventListener('click', () => {
-      valueBtn.setAttribute('speed', 200);
-    })
+
+    (function barElement(customElements, document) {
+      'use strict';
+      class MyBar extends HTMLElement {
+
+        static get observedAttributes(){
+          return ['speed'];
+        }
+        constructor(){
+          super();
+          this.speed = 10;
+          const shadowRoot = this.attachShadow({mode: 'open'});
+
+          shadowRoot.innerHTML = `
+          <style>
+
+            :host {
+              --slider-color: white;
+              --slider-height: 10px;
+            }
+
+            div {
+              background-color: var(--slider-color);
+              height: 10px;
+              transition: width 2s;
+              width: 0.1px;
+            }
+          </style>
+
+          <div></div>
+          `
+        }
+
+
+        attributeChangedCallback(name, oldVal, newVal) {
+          if(name === 'speed') {
+            this.speed = newVal;
+            console.log(this.speed);
+          }
+        }
+
+        get speed(){
+          return this.getAttribute('speed');
+        }
+
+        set speed(val){
+          switch (val) {
+            case "slow":
+              this.setAttribute('speed', 8);
+              console.log('slow', this.speed);
+              break;
+
+            case "fast":
+              this.setAttribute('speed', 4);
+              console.log('slow', this.speed);
+              break;
+
+            default:
+              this.setAttribute('speed', this.speed);
+              console.log('final Speed ' + this.speed)
+              break;
+          }
+        }
+
+        loadFunction(nextWidth) {
+          const div = this.shadowRoot.querySelector('div')
+          let transitionTime = this.loadSpeed();
+          console.log('loadSpeed', transitionTime + 's');
+          div.style.transitionDuration = transitionTime + 's';
+          div.style.width = nextWidth + '%';
+
+          let myFunc = () => {
+            this.loadProgress(nextWidth);
+          }
+          setTimeout(myFunc, transitionTime*1000);
+        }
+        loadSpeed() {
+          console.log('Speed', this.speed)
+          let transitionTime = Math.ceil(Math.random() * this.speed);
+          return transitionTime;
+        }
+
+        loadProgress(stepWidth) {
+          if (stepWidth >= 100) {
+            load.innerHTML = "yey!";
+            console.log('finish');
+
+          }else {
+            let nextWidth = stepWidth + Math.round(Math.random()*(100 - stepWidth));
+            this.loadFunction(nextWidth);
+          }
+        }
+      }
+      customElements.define('bar-component', MyBar);
+    })(window.customElements);
+    </script>
+    <script>
+      document.getElementById('btn').addEventListener("click", function() {
+        document.querySelector('bar-component').loadProgress(0)
+
+      });
     </script>
   </body>
 </html>

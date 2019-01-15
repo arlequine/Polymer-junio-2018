@@ -25,7 +25,7 @@ class NewTab {
     let title = document.getElementById('tab_title').value;
     //console.log(title);
     let newTab = new NewTab();
-    newTab.tabNew(title);
+    newTab.createTab(title);
   });
 
 function openTab(tabName) {
