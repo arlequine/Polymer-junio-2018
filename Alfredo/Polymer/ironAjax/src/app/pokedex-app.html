@@ -1,0 +1,65 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- Peticiones -->
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<!-- Rutas -->
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/iron-location/iron-location.html">
+<dom-module id="pokedex-app">
+  <template>
+    <style>
+    :host {
+    }
+    </style>
+    <app-location route="{{route}}"></app-location>
+    <app-route
+      route="{{route}}"
+      pattern="/:page"
+      active="{{active}}"
+      data="{{data}}"
+      ></app-route>
+    <iron-pages selected="{{data.page}}" attr-for-selected="page" fallback-selection="default">
+      <section page="home" >Home</section>
+      <section page="naves">Naves</section>
+      <section page="default">Default</section>
+    </iron-pages>
+
+    <iron-ajax
+      auto
+      url="https://swapi.co/api/starships"
+      handle-as="json"
+      on-response="handleResponse"
+      last-response={{starshipsList}}
+      on-error="handleError"
+      ></iron-ajax>
+
+    <template is="dom-repeat" items="starshipsList" index-as="starship">
+        [[starship.name]]
+    </template>
+  </template>
+  <script>
+    (function pokedexApp(customElements) {
+      'use strict';
+      class PokedexApp extends Polymer.Element{
+        static get is() { return 'pokedex-app'; }
+        static get properties(){
+          return {
+
+          };
+        }
+        ready() {
+          super.ready();
+          console.log(this.route);
+          console.log(this);
+        }
+        handleResponse(e) {
+          console.log("...");
+        }
+        handleError(event) {
+          console.log(event);
+        }
+      }
+      customElements.define(PokedexApp.is, PokedexApp)
+    })(window.customElements);
+  </script>
+</dom-module>

@@ -1,0 +1,76 @@
+<script>
+  (function appShell(customElements) {
+    'use strict';
+
+    class AppShell extends HTMLElement {
+
+      constructor() {
+        super();
+        this.activeContact;
+
+        const shadowRoot = this.attachShadow({mode: 'open'});
+        shadowRoot.innerHTML = `
+          <style>
+            h1 {
+              text-align: center;
+              color: #004481;
+            }
+            aside {
+              border: 2px solid black;
+              display: inline-block;
+              height: 700px;
+              width: 29%;
+              border-color: #004481;
+            }
+            section {
+              border: 2px solid black;
+              display: inline-block;
+              vertical-align: top;
+              height: 700px;
+              width: 70%;
+              border-color: #004481;
+            }
+          </style>
+          <header>
+            <h1>Contactos...</h1>
+          </header>
+          <section>
+            <slot name="contact-panel"></slot>
+          </section>
+          <aside>
+            <contact-card
+              name = "Nau"
+              phone = "5588884444"
+              address = "Zamora 187"
+              image-url = "/img/profile1.png">
+            </contact-card>
+            <slot name="contact-card"></slot>
+          </aside>
+        `
+      }
+
+      connectedCallback() {
+        this.addEventListener('contact-change', this.changeActiveContact)
+      }
+
+      changeActiveContact(event) {
+        this.activeContact = {
+          name: event.detail.name,
+          phone: event.detail.phone,
+          address: event.detail.address,
+          imageUrl: event.detail.imageUrl
+        }
+        this.setActiveContact();
+      }
+
+      setActiveContact() {
+        const contactPanel = this.querySelector('contact-panel');
+        contactPanel.setAttribute('name', this.activeContact.name);
+        contactPanel.setAttribute('phone', this.activeContact.phone);
+        contactPanel.setAttribute('address', this.activeContact.address);
+        contactPanel.setAttribute('image-url', this.activeContact.imageUrl);
+      }
+    }
+    customElements.define('app-shell', AppShell);
+  })(window.customElements);
+</script>

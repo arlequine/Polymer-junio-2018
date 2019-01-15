@@ -1,0 +1,101 @@
+<script>
+  (function contactCard(customElements) {
+    'use strict';
+
+    class ContactCard extends HTMLElement {
+
+      static get observedAttributes() {
+        return ['name', 'phone', 'address', 'image-url'];
+      }
+
+      constructor() {
+        super();
+        this.name;
+        this.phone;
+        this.address;
+        this.imageUrl;
+
+        const shadowRoot = this.attachShadow({mode: 'open'});
+        shadowRoot.innerHTML = `
+          <style>
+            article {
+              background-color: #004481;
+              padding: 10px;
+              margin: 0 0 10px 0;
+            }
+            picture {
+              display: inline-block;
+              width: 30%;
+            }
+            img {
+              width: 100%;
+            }
+            h4 {
+              font-size: 22px;
+              margin: 0;
+              color: #fff;
+            }
+            div {
+              display: inline-block;
+              width: 65%;
+            }
+            p {
+              margin: 5px 0;
+              font-weight: bold;
+              color: #fff;
+            }
+            span {
+              font-weight: normal;
+            }
+          </style>
+          <article>
+            <picture>
+              <img src="" alt="portrait" />
+            </picture>
+            <div>
+              <h4></h4>
+              <p>Phone: <span class="phone"></span></p>
+              <p>Address: <span class="address"></span></p>
+            </div>
+          </article>
+        `
+      }
+
+      connectedCallback() {
+        this.addEventListener('click', this._changeActiveContact);
+        this.shadowRoot.querySelector('h4').innerHTML = this.name;
+        this.shadowRoot.querySelector('.phone').innerHTML = this.phone;
+        this.shadowRoot.querySelector('.address').innerHTML = this.address;
+        this.shadowRoot.querySelector('img').setAttribute('src', this.imageUrl)
+      }
+
+      get name() {
+        return this.getAttribute('name');
+      }
+      get phone() {
+        return this.getAttribute('phone');
+      }
+      get address() {
+        return this.getAttribute('address');
+      }
+      get imageUrl() {
+        return this.getAttribute('image-url');
+      }
+
+      _changeActiveContact() {
+        this.dispatchEvent(new CustomEvent('contact-change', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            name: this.name,
+            phone: this.phone,
+            address: this.address,
+            imageUrl: this.imageUrl
+          }
+        }));
+      }
+    }
+
+    customElements.define('contact-card', ContactCard);
+  })(window.customElements);
+</script>

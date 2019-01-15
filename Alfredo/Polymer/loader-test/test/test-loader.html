@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Loader test</title>
+  <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../bower_components/web-component-tester/browser.js" ></script>
+  <link rel="import" href="../src/app-shell.html">
+</head>
+<body>
+  <test-fixture id="loader-bar-fast">
+    <loader-bar></loader-bar>
+  </test-fixture>
+  <test-fixture id="loader-bar-slow">
+    <loader-bar></loader-bar>
+  </test-fixture>
+</body>
+  <script>
+    suite('test-loader', () =>{
+      let loaderFast;
+      let loaderSlow;
+      setup(function() {
+        loaderFast = fixture('loader-bar-fast');
+        loaderSlow = fixture('loader-bar-slow');
+      });
+      suite('Set time interval with speed attribute', () =>{
+        test('slow speed give a time range within 6 to 10 seconds', () =>{
+            expect(loaderSlow.getTime(loaderSlow.bar('slow').time)).to.be.within(6, 10);
+        });
+        test('fast speed give a time range within 20 to 50 seconds', () =>{
+          expect(loaderFast.getTime(loaderSlow.bar('speed').time)).to.be.within(20, 50);
+        });
+      });
+      suite('Set % interval with speed attribute', () =>{
+        test('slow speed give a time range within 1 to 10 %', () =>{
+          expect(loaderSlow.getDistance('slow').distance).to.be.within(1, 10);
+        });
+        test('fast speed give a time range within 1 to 50 %', () =>{
+          expect(loaderFast.getDistance('speed').distance).to.be.within(1, 50);
+        });
+      });
+      suite('load-finished event is fire when load ends', () => {
+       test('load-finished event in slow', () => {
+         loaderSlow.addEventListener('finished slow', function(event) {
+           assert.equal(event.detail, 'finished in slow mode');
+           done();
+         });
+         loaderSlow.messageSucces('slow');
+       });
+       test('load-finished event in speed', () => {
+         loaderSpeed.addEventListener('finished speed', function(event) {
+           assert.equal(event.detail, 'finished in speed mode');
+           done();
+         });
+         loaderSpeed.messageSucces('speed');
+       });
+     });
+    });
+//     Suite 1:
+// 1.- Probar que cuando se le pase un atributo speed="slow" el tiempo que tarde entre aumento de la barra sea de un rango entre 6 y 10 segundos o 8 segundos.
+// 2.- Probar que cuando se le pase un atributo speed="fast" el tiempo que tarde entre aumento de la barra sea de un rango entre 1 y 4 segundos o 2 segundos.
+//
+// Suite 2:
+// 3.- Probar que cuando se le pase un atributo speed="slow" el crecimento de la barra en cada iteraciñon sea de un rango entre 1% y 20%
+// 4.- Probar que cuando se le pase un atributo speed="fast" el crecimento de la barra en cada iteraciñon sea de un rango entre 1% y 60%
+//
+// Suite 3:
+// 5.- Probar que cuando se le pase un atributo speed="slow",  al llenarse la barra se dispare un custom event con el nombre de "load-finished" con un detail:"finish in slow mode"
+// 6.- 5.- Probar que cuando se le pase un atributo speed="fast",  al llenarse la barra se dispare un custom event con el nombre de "load-finished" con un detail:"finish in fast mode"
+  </script>
+</html>

@@ -1,0 +1,108 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="loader-bar">
+  <template>
+    <style>
+      .content{
+        height: 100%;
+      }
+      .center{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .text{
+        top: 45%;
+        font-size: 50px;
+      }
+      .button{
+        top: 55%;
+      }
+      .messagge-success{
+        top: 67%;
+        font-size: 32px;
+        color: green;
+      }
+      paper-button{
+        font-size: 25px;
+        background-color: #68cbcb;
+        padding: 15px 60px;
+        color: white;
+        border-radius: 5px;
+      }
+      .loader {
+        width: 0%;
+        background-color: #ff0000b5;
+        height: 18px;
+        border-radius: 1px;
+      }
+    </style>
+
+    <div class="loader" id="loader">
+    </div>
+
+    <div class="content center">
+      <div class="center text">
+        Wait a minute!
+      </div>
+      <div class="center button">
+        <paper-button on-click="load">Iniciar Carga</paper-button>
+      </div>
+  </template>
+  <script>
+    (function loaderBar(customElements) {
+      'use strict';
+      class LoaderBar extends Polymer.Element {
+        static get is() { return 'loader-bar'; }
+        static get properties() {
+          return {
+              bar: {
+              type: Object,
+              value: {
+                slow: {
+                  time: [6, 10],
+                  distance: [1, 10]
+                },
+                fast: {
+                  time: [20, 50],
+                  distance: [1, 50]
+                }
+              }
+            },
+            speed: String
+          }
+        }
+        load(e) {
+          let speed = this.speed;
+          if(speed == "fast") {
+            console.log("fast");
+            let timeFast = this.bar.fast['time'];
+            let distanceFast = this.bar.fast['distance'];
+            let fastTime = this.getTime(timeFast[0], timeFast[1]);
+            let fastDistance = this.getDistance(distanceFast[0], distanceFast[1])
+            console.log(fastDistance);
+          }else{
+            console.log("slow");
+            let timeSlow = this.bar.slow['time'];
+            let distanceSlow = this.bar.slow['distance'];
+            let slowTime = this.getTime(timeSlow[0], timeSlow[1]);
+            let slowDistance = this.getDistance(distanceSlow[0],distanceSlow[1]);
+            console.log(slowDistance);
+          }
+        }
+
+        getTime(min, max) {
+          return Math.round(Math.random() * (max - min) + min);
+        }
+
+        getDistance(min, max) {
+          return Math.round(Math.random() * (max - min) + min);
+        }
+
+
+      }
+      customElements.define(LoaderBar.is, LoaderBar);
+    })(window.customElements);
+  </script>
+</dom-module>

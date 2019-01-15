@@ -1,0 +1,90 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="contact-panel">
+  <style>
+  </style>
+  <template>
+    <style>
+    article {
+      display: grid;
+      background-color: #004481;
+      padding: 10px;
+      margin: 0 0 10px 0;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+    picture {
+      display: inline-block;
+      width: 40%;
+    }
+    img {
+      width: 100%;
+      /* visibility: hidden; */
+    }
+    h4 {
+      font-size: 22px;
+      margin: 0;
+      color: #fff;
+    }
+    div {
+      display: inline-block;
+      width: 65%;
+    }
+    p {
+      margin: 5px 0;
+      font-weight: bold;
+      color: #fff;
+    }
+    span {
+      font-weight: normal;
+    }
+    .button{
+      background-color: #ffffff;
+    }
+    .right,
+    .left {
+      text-decoration: none;
+      color: #fff;
+    }
+    </style>
+    <article>
+        <template is="dom-if" if="[[favorite]]">
+          <picture>
+            <div class="left" on-click="_left" ><</div>
+            <img src="../../img/[[img]]" alt="">
+            <div class="right" on-click="right">></div>
+            <!-- <div class="button">
+              <paper-button raised on-click="_updateContact">Editar</paper-button>
+            </div> -->
+            <p>[[img]]</p>
+          </picture>
+        </template>
+
+        <template></template>
+      <div>
+        <h4>Name: [[name]]</h4>
+        <p>Phone: [[phone]]<span></span></p>
+      </div>
+    </article>
+  </template>
+  <script>
+    (function contactPanel() {
+      'use strict';
+      class ContactPanel extends Polymer.Element {
+        static get is() {return 'contact-panel'}
+        static get properties() {
+          return {
+            name: String,
+            phone: String,
+            favorite: Boolean,
+            img: Array
+          }
+        }
+        _left(e) {
+          console.log(e);
+        }
+      }
+      customElements.define(ContactPanel.is, ContactPanel);
+    }(window.customElements));
+  </script>
+</dom-module>

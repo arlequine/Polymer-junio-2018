@@ -1,0 +1,125 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="./contact-item.html">
+<link rel="import" href="./contact-panel.html">
+<dom-module id="app-shell">
+  <template>
+    <header>
+      <h1>Contactos...</h1>
+    </header>
+    <style>
+    :host {
+      text-align: center;
+      color: #004481;
+    }
+
+    aside{
+      border: 2px solid black;
+      display: inline-block;
+      height: 700px;
+      width: 29%;
+      border-color: #004481;
+    }
+    img{
+      width: 100%
+    }
+    .content{
+      width: 84%;
+      margin: 0 auto;
+    }
+    .contact-panel {
+      border: 2px solid black;
+      display: inline-block;
+      vertical-align: top;
+      height: 700px;
+      width: 70%;
+      border-color: #004481;
+    }
+
+    .contact-items{
+      order: 2;
+    }
+    </style>
+
+      <div class="content">
+			<section>
+			</section>
+      <contact-panel id="contactPanel" class="contact-panel"></contact-panel>
+      <aside style="overflow: scroll;">
+  			<div class="contacts-items">
+          <div class="button">
+            <paper-button raised on-click="_newContact">Nuevo contacto</paper-button>
+          </div>
+          <template is="dom-repeat" items="[[contactsList]]" as="contacts">
+            <contact-item name="[[contacts.name]]" phone="[[contacts.phone]]" img="[[contacts.img]]" favorite="[[contacts.favorite]]" on-click="_showContactPanel"></contact-item>
+          </template>
+  			</div>
+        <paper-dialog id="modal" modal>
+          <paper-input label="Nombre" value="{{contactName}}"></paper-input>
+          <paper-input label="Telefono" value="{{contactPhone}}"></paper-input>
+          <paper-checkbox checked="{{contactFavorite}}">Favorito</paper-checkbox>
+          <div class="buttons">
+            <div class="buttons">
+            <paper-button dialog-dismiss>Cancel</paper-button>
+            <paper-button autofocus on-click="_saveContact">Aceptar</paper-button>
+          </div>
+        </paper-dialog>
+    </aside>
+		</div>
+  </template>
+  <script>
+    (function appShell() {
+      'use strict';
+      class AppShell extends Polymer.Element {
+        static get is() { return 'app-shell'; }
+        static get properties() {
+          return {
+            contactsList: {
+              type: Array,
+              value: [{
+                name: 'Ase',
+                phone: '5512325770',
+                favorite: true,
+                img: "profile4.jpeg"
+              },{
+                name: 'Zuka',
+                phone: "1234567890",
+                favorite: true,
+                img: ["profile2.png"]
+              },{
+                name: 'Nau',
+                phone: "5512345689",
+                favorite: false,
+                img:  "profile1.png"
+              }]
+
+            }
+          };
+        }
+        _newContact(e) {
+          this.$.modal.open();
+        }
+        _saveContact(e) {
+					this.push('contactsList', {
+						name: this.contactName,
+						phone: this.contactPhone,
+						favorite: this.contactFavorite,
+						img: 'user.png'
+					});
+					this.$.modal.close();
+				}
+        _showContactPanel(e) {
+          const contactPanel = this.$.contactPanel;
+          contactPanel.name = e.target.name;
+          contactPanel.phone = e.target.phone;
+          contactPanel.favorite = e.target.favorite;
+          contactPanel.img = e.target.img;
+        }
+      }
+      customElements.define(AppShell.is, AppShell);
+    })(window.customElements);
+  </script>
+</dom-module>

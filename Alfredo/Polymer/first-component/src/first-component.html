@@ -1,0 +1,32 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="first-component">
+  <template>
+  <style>
+    :host {
+      display: block;
+    }
+    h1{
+      font-size: 40px;
+    }
+  </style>
+  <h1>Primer componente</h1>
+  </template>
+  <script>
+  (function firstComponent(customElements) {
+    'use strict';
+    class FirstComponent extends Polymer.Element {
+      static get is() { return 'first-component' }
+      static get properties() {
+        return {
+          myName: {
+            name: String,
+            value: 'Fredo'
+          }
+        }
+      }
+    }
+    customElements.define(FirstComponent.is, FirstComponent);
+  })(window.customElements);
+  </script>
+</dom-module>

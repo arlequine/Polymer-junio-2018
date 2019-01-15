@@ -1,0 +1,67 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="contact-item">
+  <template>
+  <style>
+    article {
+      background-color: #004481;
+      padding: 10px;
+      margin: 0 0 10px 0;
+    }
+    picture {
+      display: inline-block;
+      width: 30%;
+    }
+    img {
+      width: 100%;
+    }
+    h4 {
+      font-size: 22px;
+      margin: 0;
+      color: #fff;
+    }
+    div {
+      display: inline-block;
+      width: 65%;
+    }
+    p {
+      margin: 5px 0;
+      font-weight: bold;
+      color: #fff;
+    }
+    span {
+      font-weight: normal;
+    }
+  </style>
+  <article>
+      <template is="dom-if" if="[[favorite]]">
+        <picture>
+          <img src="../../img/[[img]]" alt="">
+        </picture>
+      </template>
+    <div>
+      <h4>Name: [[name]]</h4>
+      <p>Phone: [[phone]]<span></span></p>
+    </div>
+  </article>
+
+  </template>
+  <script>
+    (function contactItem() {
+      'use strict';
+      class ContactItem extends Polymer.Element {
+        static get is() { return 'contact-item'; }
+        static get properties() {
+          return {
+            name: String,
+            phone: String,
+            favorite: Boolean,
+            img: String
+          }
+        }
+      }
+
+      customElements.define(ContactItem.is, ContactItem);
+    })(window.customElements);
+  </script>
+</dom-module>

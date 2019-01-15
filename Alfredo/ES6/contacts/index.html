@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contacts</title>
+    <link rel="import" href="src/app-shell.html">
+    <link rel="import" href="src/contact-card.html">
+    <link rel="import" href="src/contact-panel.html">
+  </head>
+    <body>
+    <app-shell>
+      <contact-panel slot="contact-panel"></contact-panel>
+      <contact-card
+        name = "Aseret"
+        phone = "5512325770"
+        address = "Canal del mar blanco"
+        image-url = "/img/profile4.jpeg"
+        slot = "contact-card">
+      </contact-card>
+      <contact-card
+        name = "Zuka"
+        phone = "5512345678"
+        address = "Manuel altamirano"
+        image-url = "/img/profile2.png"
+        slot = "contact-card">
+      </contact-card>
+    </app-shell>
+  </body>
+</html>

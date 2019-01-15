@@ -1,0 +1,77 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="logica-ppt">
+  <template>
+    <style>
+
+    </style>
+  </template>
+  <template is="dom-if" if="[[activeChoise.active]]" restamp="true">
+    <h1>hola</h1>
+  </template>
+  [[activeChoise.name]]
+  [[activeChoise.active]]
+  <script>
+    (function logicaPPT() {
+      'use strict';
+      class LogicaPPT extends Polymer.Element{
+        static get is() {return 'logica-ppt';}
+        static get properties() {
+          return {
+            band: Boolean,
+            activeChoise: {
+              type: Object,
+              observer: '_selection'
+            }
+          }
+        };
+        _optionCpu() {
+          const options = ['tijeras', 'piedra', 'papel'];
+          var seleccion = options[Math.ceil(Math.random()*3 - 1)];
+          return seleccion;
+        }
+
+        _selection(activeChoise) {
+          var selectCpu = this._optionCpu();
+          if(activeChoise.name == "papel" && selectCpu == "piedra") {
+            console.log('Player: ' + activeChoise.name);
+            console.log('CPU: ' + selectCpu);
+            console.log("gana papel");
+            return activeChoise.active;
+          }
+          if(activeChoise.name == "papel" && selectCpu == "tijeras") {
+            console.log('Player: ' + activeChoise.name);
+            console.log('CPU: ' + selectCpu);
+              console.log("gana tijeras");
+              return activeChoise
+          }
+          if(activeChoise.name == "piedra" && selectCpu == "tijeras") {
+            console.log('Player: ' + activeChoise.name);
+            console.log('CPU: ' + selectCpu);
+              console.log("gana piedra");
+              return activeChoise
+          }
+          if(activeChoise.name == "tijeras" && selectCpu == "piedra") {
+            console.log('Player: ' + activeChoise.name);
+            console.log('CPU: ' + selectCpu);
+              console.log("gana piedra");
+              return activeChoise
+          }
+          if(activeChoise.name == "tijeras" && selectCpu == "papel") {
+            console.log('Player: ' + activeChoise.name);
+            console.log('CPU: ' + selectCpu);
+              console.log("gana tijeras");
+              return activeChoise
+          }
+          if(activeChoise.name == selectCpu) {
+            console.log('Player: ' + activeChoise.name);
+            console.log('CPU: ' + selectCpu);
+              console.log('empate');
+              return activeChoise
+          }
+        }
+      }
+      customElements.define(LogicaPPT.is, LogicaPPT);
+    })(window.customElements);
+  </script>
+</dom-module>
